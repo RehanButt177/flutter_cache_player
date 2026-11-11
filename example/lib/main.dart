@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:cached_video_player/cached_video_player.dart';
+import 'package:flutter_cache_player/cached_video_player.dart';
 
 void main() {
   runApp(const MyApp());

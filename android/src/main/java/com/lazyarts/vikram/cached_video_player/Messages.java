@@ -623,11 +623,12 @@ public class Messages {
   }
 
   private static HashMap<String, Object> castToMap(Object message) {
-    if (message instanceof HashMap<?, ?> rawMap) {
+    if (message instanceof HashMap) {
+      HashMap<?, ?> rawMap = (HashMap<?, ?>) message;
       HashMap<String, Object> result = new HashMap<>();
       for (HashMap.Entry<?, ?> entry : rawMap.entrySet()) {
-        if (entry.getKey() instanceof String key) {
-          result.put(key, entry.getValue());
+        if (entry.getKey() instanceof String) {
+          result.put((String) entry.getKey(), entry.getValue());
         }
       }
       return result;

@@ -1,17 +1,10 @@
-group 'android'
+group 'com.lazyarts.vikram.cached_video_player'
 version '1.0-SNAPSHOT'
 
-def args = ["-Xlint:deprecation", "-Xlint:unchecked"]
-
 buildscript {
-    ext.kotlin_version = '1.9.22'
     repositories {
         google()
         mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.3.2'
     }
 }
 
@@ -22,27 +15,29 @@ allprojects {
     }
 }
 
-tasks.withType(JavaCompile).configureEach {
-    options.compilerArgs.addAll(args)
-}
-
 apply plugin: 'com.android.library'
 
 android {
+    // Required by Android Gradle Plugin 8+. Safe on the AGP 7.3 line used by
+    // Flutter 3.10.
     namespace 'com.lazyarts.vikram.cached_video_player'
-    compileSdk 34
 
-    defaultConfig {
-        minSdk 21
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
+    // Follow the Flutter SDK that is building the host app, instead of a
+    // hardcoded API level that goes stale.
+    compileSdkVersion flutter.compileSdkVersion
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        // Java 11 source still compiles on the JDK 17 that current Flutter
+        // requires, and on the JDK 11 toolchain used by Flutter 3.10.
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
-    lint {
+    defaultConfig {
+        minSdkVersion flutter.minSdkVersion
+    }
+
+    lintOptions {
         disable 'InvalidPackage'
     }
 }

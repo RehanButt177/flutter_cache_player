@@ -112,33 +112,36 @@ final class CachedVideoPlayer {
         int type;
         if (formatHint == null) {
             type = Util.inferContentType(uri.getLastPathSegment());
+        } else if (FORMAT_SS.equals(formatHint)) {
+            type = C.TYPE_SS;
+        } else if (FORMAT_DASH.equals(formatHint)) {
+            type = C.TYPE_DASH;
+        } else if (FORMAT_HLS.equals(formatHint)) {
+            type = C.TYPE_HLS;
+        } else if (FORMAT_OTHER.equals(formatHint)) {
+            type = C.TYPE_OTHER;
         } else {
-            type = switch (formatHint) {
-                case FORMAT_SS -> C.TYPE_SS;
-                case FORMAT_DASH -> C.TYPE_DASH;
-                case FORMAT_HLS -> C.TYPE_HLS;
-                case FORMAT_OTHER -> C.TYPE_OTHER;
-                default -> -1;
-            };
+            type = -1;
         }
-        return switch (type) {
-            case C.TYPE_SS -> new SsMediaSource.Factory(
+
+        if (type == C.TYPE_SS) {
+            return new SsMediaSource.Factory(
                     new DefaultSsChunkSource.Factory(mediaDataSourceFactory),
                     new DefaultDataSource.Factory(context, mediaDataSourceFactory))
                     .createMediaSource(MediaItem.fromUri(uri));
-            case C.TYPE_DASH -> new DashMediaSource.Factory(
+        } else if (type == C.TYPE_DASH) {
+            return new DashMediaSource.Factory(
                     new DefaultDashChunkSource.Factory(mediaDataSourceFactory),
                     new DefaultDataSource.Factory(context, mediaDataSourceFactory))
                     .createMediaSource(MediaItem.fromUri(uri));
-            case C.TYPE_HLS ->
-                    new HlsMediaSource.Factory(mediaDataSourceFactory)
-                            .createMediaSource(MediaItem.fromUri(uri));
-            case C.TYPE_OTHER ->
-                    new ProgressiveMediaSource.Factory(mediaDataSourceFactory)
-                            .createMediaSource(MediaItem.fromUri(uri));
-            default ->
-                    throw new IllegalStateException("Unsupported type: " + type);
-        };
+        } else if (type == C.TYPE_HLS) {
+            return new HlsMediaSource.Factory(mediaDataSourceFactory)
+                    .createMediaSource(MediaItem.fromUri(uri));
+        } else if (type == C.TYPE_OTHER) {
+            return new ProgressiveMediaSource.Factory(mediaDataSourceFactory)
+                    .createMediaSource(MediaItem.fromUri(uri));
+        }
+        throw new IllegalStateException("Unsupported type: " + type);
     }
 
     private void setupVideoPlayer(

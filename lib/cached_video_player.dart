@@ -15,9 +15,10 @@ export 'cached_video_player_web.dart'
 if (dart.library.io) 'cached_video_player.dart';
 
 import 'src/closed_caption_file.dart';
+import 'src/method_channel_cached_video_player.dart';
 export 'src/closed_caption_file.dart';
 
-final VideoPlayerPlatform _videoPlayerPlatform = VideoPlayerPlatform.instance
+final VideoPlayerPlatform _videoPlayerPlatform = MethodChannelCachedVideoPlayer()
   // This will clear all open videos on the platform when a full restart is
   // performed.
   ..init();
@@ -350,6 +351,11 @@ class CachedVideoPlayerController
           break;
         case VideoEventType.bufferingEnd:
           value = value.copyWith(isBuffering: false);
+          break;
+        case VideoEventType.isPlayingStateUpdate:
+          if (event.isPlaying != null) {
+            value = value.copyWith(isPlaying: event.isPlaying);
+          }
           break;
         case VideoEventType.unknown:
           break;
