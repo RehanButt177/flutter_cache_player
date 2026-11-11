@@ -8,3 +8,13 @@
 
 - Fixed iOS CocoaPods specification filename.
 - Updated iOS plugin configuration.
+
+
+## 1.0.2
+
+- Improved package compatibility with Flutter's hosted package installation.
+
+
+
+
+

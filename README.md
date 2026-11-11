@@ -1,4 +1,4 @@
-# Cached Video Player
+# flutter cache player
 
 A flutter plugin that has been forked from the official [video_player](https://pub.dev/packages/video_player) package except that it supports caching in Android and iOS.
 Web plugin will work like official [video_player](https://pub.dev/packages/video_player) i.e. without caching support.
