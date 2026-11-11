@@ -14,7 +14,4 @@ Follow the Android and iOS configuration steps of the official [video_player](ht
 
 ### Contributors
 
-* [Vikram Pratap Singh](https://github.com/vikram25897)
-* [EnderTan](https://github.com/EnderTan)
-* [Philipp Bauer](https://github.com/ciriousjoker)
 * [Rehan Butt](https://github.com/RehanButt177)
