@@ -2,7 +2,7 @@
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
 #
 Pod::Spec.new do |s|
-  s.name             = 'cached_video_player'
+  s.name             = 'flutter_cache_player'
   s.version          = '0.0.2'
   s.summary          = 'Cached Video Player'
   s.description      = <<-DESC
